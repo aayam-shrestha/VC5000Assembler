@@ -18,12 +18,13 @@ DESCRIPTION
     This function will place the symbol "a_symbol" and its location "a_loc"
     in the symbol table.
 */
+
 void SymbolTable::AddSymbol( const string &a_symbol, int a_loc )
 {
     // If the symbol is already in the symbol table, record it as multiply defined.
     map<string, int>::iterator st = m_symbolTable.find( a_symbol );
-    if( st != m_symbolTable.end() ) {
-
+    if( st != m_symbolTable.end() )
+    {
         st->second = multiplyDefinedSymbol;
         return;
     }
@@ -31,12 +32,19 @@ void SymbolTable::AddSymbol( const string &a_symbol, int a_loc )
     m_symbolTable[a_symbol] = a_loc;
 }
 
-void SymbolTable::DisplaySymbolTable()
-{
-    
+void SymbolTable::DisplaySymbolTable() {
+    cout << "Symbol Table:" << endl;
+    cout << "Symbol #" << "   " << "Symbol" << "    " << "Location" << endl;
+
+    int s_num = 0;
+    for (auto iter : m_symbolTable) 
+    {
+        cout << s_num << "           " << iter.first << "          " << iter.second << endl;
+        s_num++;
+    }
 }
 
 bool SymbolTable::LookupSymbol(const string& a_symbol, int& a_loc) 
 {
-
+    return true;
 }
