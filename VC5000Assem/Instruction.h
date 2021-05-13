@@ -3,6 +3,7 @@
 //
 #pragma once
 #include<sstream>
+#include<algorithm>
 
 // The elements of an instruction.
 class Instruction{
@@ -20,23 +21,25 @@ public:
         ST_End                   		// end instruction.
     };
     // Parse the Instruction.
-    InstructionType ParseInstruction(string a_line) 
+    InstructionType ParseInstruction(string m_instruction) 
     { 
+        //making a copy of the original instruction
+        string a_line = m_instruction;
+
         //removing comments from a line
         removeComments(a_line);
 
-        if (ParseLineIntoFields)
+        //if endStr is not empty, then the instruction is invalid
+        if (!ParseLineIntoFields(a_line, m_Label, m_OpCode, m_Operand1, m_Operand2))
         {
             //CHECKCHECK report error - failed to parse b/c instruction was invalid !!!!!!!!
         }
 
-
-
-        return ST_MachineLanguage; //CHECKCHECK THIS IS TEMPORARY!!!
+        return computeType(a_line, m_OpCode);
     }
 
-    //using code from the website to remove comments and parse instruction into label, op code, operand1, operand2
-    void removeComments(string a_line)
+    //using code from the website for the functions removeComments and ParseLineIntoFilelds
+    void removeComments(string& a_line)
     {
         // Demonstrating how to remove a semicolon and everything after it from a string
 
@@ -58,7 +61,7 @@ public:
         string& a_Operand1, string& a_Operand2)
     {
         // Get rid of any commas from the line.
-        a_line.replace(a_line.begin(), a_line.end(), ',', ' ');
+        replace(a_line.begin(), a_line.end(), ',', ' ');
 
         // Get the elements of the line.  That is the label, op code, operand1, and operand2.
         string endStr;
@@ -77,7 +80,27 @@ public:
         return endStr.empty() ? true : false;
     }
 
-    
+    InstructionType computeType(string a_line, string& a_label)
+    {
+        //Check OpCode to determine and return the type of instruction
+        if (m_OpCode == "ds" || m_OpCode == "dc" || m_OpCode == "org")
+        {
+            return ST_AssemblerInstr;
+        }
+        else if (m_OpCode == "end")
+        {
+            return ST_End;
+        }
+        //If the line was a comment, it would be converted to an empty string after parsing
+        else if (a_line == "")
+        {
+            return ST_Comment;
+        }
+        else
+        {
+            return ST_MachineLanguage;
+        }
+    }
 
     // Compute the location of the next instruction.
     int LocationNextInstruction(int a_loc) { return a_loc + 1; }; //CHECKCHECK
