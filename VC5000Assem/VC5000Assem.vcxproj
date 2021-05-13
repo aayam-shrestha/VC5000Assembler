@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Errors.cpp" />
     <ClCompile Include="Instruction.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Assembler.cpp" />
