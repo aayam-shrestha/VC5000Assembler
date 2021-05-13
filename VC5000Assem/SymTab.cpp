@@ -42,6 +42,9 @@ void SymbolTable::DisplaySymbolTable() {
         cout << s_num << "\t   " << iter.first << "\t    " << iter.second << endl;
         s_num++;
     }
+    std::cout << "--------------------------------------------------\n\n";
+    std::cout << "Press Enter to Continue...";
+    cin.get();
 }
 
 bool SymbolTable::LookupSymbol(const string& a_symbol, int& a_loc) 
