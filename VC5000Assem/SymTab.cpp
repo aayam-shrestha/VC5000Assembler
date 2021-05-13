@@ -34,12 +34,12 @@ void SymbolTable::AddSymbol( const string &a_symbol, int a_loc )
 
 void SymbolTable::DisplaySymbolTable() {
     cout << "Symbol Table:" << endl;
-    cout << "Symbol #" << "   " << "Symbol" << "    " << "Location" << endl;
+    cout << "Symbol #" << "   " << "Symbol" << "   " << "Location" << endl;
 
     int s_num = 0;
     for (auto iter : m_symbolTable) 
     {
-        cout << s_num << "           " << iter.first << "          " << iter.second << endl;
+        cout << s_num << "\t   " << iter.first << "\t    " << iter.second << endl;
         s_num++;
     }
 }
