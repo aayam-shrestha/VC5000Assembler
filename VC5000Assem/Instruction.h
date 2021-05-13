@@ -21,89 +21,24 @@ public:
         ST_End                   		// end instruction.
     };
     // Parse the Instruction.
-    InstructionType ParseInstruction(string m_instruction) 
-    { 
-        //making a copy of the original instruction
-        string a_line = m_instruction;
+    InstructionType ParseInstruction(string m_instruction);
 
-        //removing comments from a line
-        removeComments(a_line);
+    //----- Using code from the website for the functions removeComments and ParseLineIntoFilelds -----
 
-        //if endStr is not empty, then the instruction is invalid
-        if (!ParseLineIntoFields(a_line, m_Label, m_OpCode, m_Operand1, m_Operand2))
-        {
-            //CHECKCHECK report error - failed to parse b/c instruction was invalid !!!!!!!!
-        }
+    //Search for semicolon in the instruction and remov everything after it
+    void removeComments(string& a_line);    
 
-        return computeType(a_line, m_OpCode);
-    }
-
-    //using code from the website for the functions removeComments and ParseLineIntoFilelds
-    void removeComments(string& a_line)
-    {
-        // Demonstrating how to remove a semicolon and everything after it from a string
-
-        // The code below searches for the first semicolon in a string and deletes
-        // it and everything after it.  If there is no semicolon, it will delete nothing.
-        size_t isemi1 = a_line.find(';');
-        if (isemi1 != string::npos)
-        {
-            a_line.erase(isemi1);
-        }
-        return;
-    }
-
-    // Function to break down a statement into label, op code, operand1, operand2
+    // Break instruction into label, op code, operand1, operand2
     // If it returns an empty string for the op code, it indicates an empty string
-    // The return value is false if there are extra fields.
-    // Make sure you include the algorithm file.
+    // Return false if there are extra fields
     bool ParseLineIntoFields(string a_line, string& a_label, string& a_OpCode,
-        string& a_Operand1, string& a_Operand2)
-    {
-        // Get rid of any commas from the line.
-        replace(a_line.begin(), a_line.end(), ',', ' ');
+        string& a_Operand1, string& a_Operand2);
 
-        // Get the elements of the line.  That is the label, op code, operand1, and operand2.
-        string endStr;
-        a_label = a_OpCode = a_Operand1 = a_Operand2 = "";
-        istringstream ins(a_line);
-        if (a_line[0] == ' ' || a_line[0] == '\t')
-        {
-            a_label = "";
-            ins >> a_OpCode >> a_Operand1 >> a_Operand2 >> endStr;
-        }
-        else
-        {
-            ins >> a_label >> a_OpCode >> a_Operand1 >> a_Operand2 >> endStr;
-        }
-        // If there is extra data, return false.
-        return endStr.empty() ? true : false;
-    }
-
-    InstructionType computeType(string a_line, string& a_label)
-    {
-        //Check OpCode to determine and return the type of instruction
-        if (m_OpCode == "ds" || m_OpCode == "dc" || m_OpCode == "org")
-        {
-            return ST_AssemblerInstr;
-        }
-        else if (m_OpCode == "end")
-        {
-            return ST_End;
-        }
-        //If the line was a comment, it would be converted to an empty string after parsing
-        else if (a_line == "")
-        {
-            return ST_Comment;
-        }
-        else
-        {
-            return ST_MachineLanguage;
-        }
-    }
+    //Compute and return the type of instruction
+    InstructionType computeType(string& a_OpCode);
 
     // Compute the location of the next instruction.
-    int LocationNextInstruction(int a_loc) { return a_loc + 1; }; //CHECKCHECK
+    int LocationNextInstruction(int a_loc) { return a_loc + 1; }; //CHECKCHECK !!!
 
     // To access the label
     inline string &GetLabel( ) 
