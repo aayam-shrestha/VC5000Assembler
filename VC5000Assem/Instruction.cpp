@@ -113,3 +113,11 @@ int Instruction::LocationNextInstruction(int a_loc)
     //Increment location by 1
     return a_loc + 1;
 }
+
+std::pair<int, std::string> Instruction::TranslateInstruction(std::string& a_line, int a_loc)
+{
+    
+
+    //THIS IS TEMPORARY
+    return std::pair<int, std::string>(1, "10101");
+}

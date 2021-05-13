@@ -48,6 +48,9 @@ public:
     // Convert a std::string to lowercase
     std::string lowerCase(std::string a_OpCode);
 
+    // Translate assembly instruction into machine language
+    std::pair<int, std::string> TranslateInstruction(std::string& a_line, int a_loc);
+
 private:
     // The elemements of a instruction
     std::string m_Label;            // The label.
