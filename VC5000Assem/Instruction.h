@@ -12,8 +12,7 @@ public:
     Instruction( ) { };
     ~Instruction( ) { };
 
-    // Codes to indicate the type of instruction we are processing.  Why is this inside the
-    // class?
+    // Codes to indicate the type of instruction we are processing.  Why is this inside the class?
     enum InstructionType {
         ST_MachineLanguage, 	// A machine language instruction.
         ST_AssemblerInstr,  		// Assembler Language instruction.
@@ -38,18 +37,16 @@ public:
     InstructionType computeType(string& a_OpCode);
 
     // Compute the location of the next instruction.
-    int LocationNextInstruction(int a_loc) { return a_loc + 1; }; //CHECKCHECK !!!
+    int LocationNextInstruction(int a_loc);
 
     // To access the label
-    inline string &GetLabel( ) 
-    {
-        return m_Label;
-    };
+    inline string &GetLabel() { return m_Label; };
+
     // To determine if a label is blank.
-    inline bool isLabel( ) 
-    {
-        return ! m_Label.empty();
-    };
+    inline bool isLabel() { return ! m_Label.empty(); };
+
+    // To convert a string to lowercase
+    string lowerCase(string a_OpCode);
 
 private:
     // The elemements of a instruction
