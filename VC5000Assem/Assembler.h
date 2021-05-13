@@ -8,6 +8,7 @@
 #include "Instruction.h"
 #include "FileAccess.h"
 #include "Emulator.h"
+#include<vector>
 
 class Assembler {
 private:
@@ -16,6 +17,9 @@ private:
     SymbolTable m_symtab; // Symbol table object
     Instruction m_inst;	    // Instruction object
     emulator m_emul;        // Emulator object
+
+    //Vector of pairs to hold machine language translation
+    std::vector <std::pair <int, std::string>> m_machineCode;
 
 public:
     Assembler( int argc, char *argv[] );
