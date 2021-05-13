@@ -10,7 +10,7 @@
 class FileAccess {
 
 private:
-    ifstream m_sfile;   // Source file object.
+    std::ifstream m_sfile;   // Source file object.
 
 public:
     // Opens the file.
@@ -20,8 +20,18 @@ public:
     ~FileAccess( );
 
     // Get the next line from the source file. Returns true if there was one.
-    bool GetNextLine( string &a_line );
+    bool GetNextLine( std::string &a_line );
 
     // Put the file pointer back to the beginning of the file.
     void rewind( );
+
+    void PrintFile()
+    {
+        std::string line;
+        while (!m_sfile.eof())
+        {
+            getline(m_sfile, line);
+            std::cout << line << std::endl;
+        }
+    }
 };

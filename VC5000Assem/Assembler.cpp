@@ -25,13 +25,11 @@ void Assembler::PassI( )
     for( ; ; ) {
 
         // Read the next line from the source file.
-        string line; 
+        std::string line; 
         if( ! m_facc.GetNextLine(line) ) 
         {
             // If there are no more lines, we are missing an end statement.
             // We will let this error be reported by Pass II.
-
-            //CHECKCHECK CHECK FOR ERROR !!!!!
 
             return;
         }
@@ -70,7 +68,7 @@ void Assembler::PassII()
     for (; ; ) {
 
         // Read the next line from the source file.
-        string line;
+        std::string line;
         if (!m_facc.GetNextLine(line))
         {
             // If there are no more lines, we are missing an end statement.
@@ -84,13 +82,7 @@ void Assembler::PassII()
         // Parse the line and get the instruction type.
         Instruction::InstructionType st = m_inst.ParseInstruction(line);
 
-        // Labels can only be on machine language and assembler language
-        // instructions.  So, skip other instruction types.  Currently this is only comments.
-        if (st != Instruction::ST_MachineLanguage && st != Instruction::ST_AssemblerInstr)
-        {
-            continue;
-        }
-
-        
+        // displaying the contents of the file once
+        m_facc.PrintFile();        
     }
 }

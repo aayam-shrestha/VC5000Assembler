@@ -21,7 +21,7 @@ public:
 
 private:
 
-    vector<int> m_memory;         	// Memory for the VC5000
+    std::vector<int> m_memory;         	// Memory for the VC5000
     int m_reg[10];                     		// Registers for the VC5000
 };
 

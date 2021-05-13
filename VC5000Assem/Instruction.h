@@ -20,41 +20,41 @@ public:
         ST_End                   		// end instruction.
     };
     // Parse the Instruction.
-    InstructionType ParseInstruction(string m_instruction);
+    InstructionType ParseInstruction(std::string m_instruction);
 
     //----- Using code from the website for the functions removeComments and ParseLineIntoFilelds -----
 
     //Search for semicolon in the instruction and remov everything after it
-    void removeComments(string& a_line);    
+    void removeComments(std::string& a_line);    
 
     // Break instruction into label, op code, operand1, operand2
-    // If it returns an empty string for the op code, it indicates an empty string
+    // If it returns an empty std::string for the op code, it indicates an empty std::string
     // Return false if there are extra fields
-    bool ParseLineIntoFields(string a_line, string& a_label, string& a_OpCode,
-        string& a_Operand1, string& a_Operand2);
+    bool ParseLineIntoFields(std::string a_line, std::string& a_label, std::string& a_OpCode,
+        std::string& a_Operand1, std::string& a_Operand2);
 
     //Compute and return the type of instruction
-    InstructionType computeType(string& a_OpCode);
+    InstructionType computeType(std::string& a_OpCode);
 
     // Compute the location of the next instruction.
     int LocationNextInstruction(int a_loc);
 
     // To access the label
-    inline string &GetLabel() { return m_Label; };
+    inline std::string &GetLabel() { return m_Label; };
 
     // To determine if a label is blank.
     inline bool isLabel() { return ! m_Label.empty(); };
 
-    // To convert a string to lowercase
-    string lowerCase(string a_OpCode);
+    // Convert a std::string to lowercase
+    std::string lowerCase(std::string a_OpCode);
 
 private:
     // The elemements of a instruction
-    string m_Label;            // The label.
-    string m_OpCode;       // The symbolic op code.
-    string m_Operand1;     // The first operand. 
-    string m_Operand2;     // The second operand.
-    string m_instruction;    // The original instruction.
+    std::string m_Label;            // The label.
+    std::string m_OpCode;       // The symbolic op code.
+    std::string m_Operand1;     // The first operand. 
+    std::string m_Operand2;     // The second operand.
+    std::string m_instruction;    // The original instruction.
 
     // Derived values.
     int m_NumOpCode;     // The numerical value of the op code for machine language equivalents.
@@ -62,4 +62,4 @@ private:
 
     bool m_IsNumericOperand1;// == true if the operand is numeric.
     int m_Operand1Value;   // The value of the operand if it is numeric.
-};      
+};

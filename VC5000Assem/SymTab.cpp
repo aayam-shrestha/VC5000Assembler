@@ -19,10 +19,10 @@ DESCRIPTION
     in the symbol table.
 */
 
-void SymbolTable::AddSymbol( const string &a_symbol, int a_loc )
+void SymbolTable::AddSymbol( const std::string &a_symbol, int a_loc )
 {
     // If the symbol is already in the symbol table, record it as multiply defined.
-    map<string, int>::iterator st = m_symbolTable.find( a_symbol );
+    std::map<std::string, int>::iterator st = m_symbolTable.find( a_symbol );
     if( st != m_symbolTable.end() )
     {
         st->second = multiplyDefinedSymbol;
@@ -33,21 +33,21 @@ void SymbolTable::AddSymbol( const string &a_symbol, int a_loc )
 }
 
 void SymbolTable::DisplaySymbolTable() {
-    cout << "Symbol Table:" << endl;
-    cout << "Symbol #" << "   " << "Symbol" << "   " << "Location" << endl;
+    std::cout << "Symbol Table:" << std::endl;
+    std::cout << "Symbol #" << "   " << "Symbol" << "   " << "Location" << std::endl;
 
     int s_num = 0;
     for (auto iter : m_symbolTable) 
     {
-        cout << s_num << "\t   " << iter.first << "\t    " << iter.second << endl;
+        std::cout << s_num << "\t   " << iter.first << "\t    " << iter.second << std::endl;
         s_num++;
     }
     std::cout << "--------------------------------------------------\n\n";
     std::cout << "Press Enter to Continue...";
-    cin.get();
+    std::cin.get();
 }
 
-bool SymbolTable::LookupSymbol(const string& a_symbol, int& a_loc) 
+bool SymbolTable::LookupSymbol(const std::string& a_symbol, int& a_loc) 
 {
     return true;
 }
