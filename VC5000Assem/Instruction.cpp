@@ -1,7 +1,6 @@
 #include"stdafx.h"
 #include"Instruction.h"
 
-//Parse instruction into label, op code, operand1, operand2 and return the type of instruction
 Instruction::InstructionType Instruction::ParseInstruction(string m_instruction)
 {
     //making a copy of the original instruction
@@ -19,8 +18,6 @@ Instruction::InstructionType Instruction::ParseInstruction(string m_instruction)
     return computeType(m_OpCode);
 }
 
-
-//remove comments from instruction
 void Instruction::removeComments(string& a_line)
 {
     // Demonstrating how to remove a semicolon and everything after it from a string
@@ -35,7 +32,6 @@ void Instruction::removeComments(string& a_line)
     return;
 }
 
-//Parse a line of instruction into label, op code, operand1,  and return false if instruction is invalid
 bool Instruction::ParseLineIntoFields(string a_line, string& a_label, string& a_OpCode,
     string& a_Operand1, string& a_Operand2)
 {
@@ -59,7 +55,6 @@ bool Instruction::ParseLineIntoFields(string a_line, string& a_label, string& a_
     return endStr.empty() ? true : false;
 }
 
-//Compute and return instruction type(Machine language, assembly language, end statement or comment)
 Instruction::InstructionType Instruction::computeType(string& a_OpCode)
 {
     //Check OpCode to determine and return the type of instruction
@@ -79,37 +74,4 @@ Instruction::InstructionType Instruction::computeType(string& a_OpCode)
     {
         return ST_MachineLanguage;
     }
-}
-
-// Convert string to lower case
-string Instruction::lowerCase(string a_OpCode)
-{
-    for (int i = 0; i < a_OpCode.length(); i++)
-    {
-        a_OpCode[i] = tolower(a_OpCode[i]);
-    }
-    return a_OpCode;
-}
-
-//Compute locaiton of next instruction
-int Instruction::LocationNextInstruction(int a_loc)
-{
-    //There is no next instruction in the case of a comment
-    if (m_type == ST_Comment)
-    {
-        return a_loc;
-    }
-
-    //Checking if the instruction is org
-    if (m_type == ST_MachineLanguage && lowerCase(m_OpCode) == "org")
-    {
-        return stoi(m_Operand1);
-    }
-    else if (m_type == ST_MachineLanguage && lowerCase(m_OpCode) == "ds")
-    {
-        return a_loc + stoi(m_Operand1);
-    }
-
-    //Increment location by 1
-    return a_loc + 1;
 }
