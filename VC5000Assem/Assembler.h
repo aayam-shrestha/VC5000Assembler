@@ -28,7 +28,7 @@ public:
     void DisplaySymbolTable() { m_symtab.DisplaySymbolTable(); }
 
     // Pass II - generate a translation
-    void PassII() {} //CHECKCHECK
+    void PassII();
     
     // Run emulator on the translation.
     void RunProgramInEmulator() {} //CHECKCHECK

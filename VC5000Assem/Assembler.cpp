@@ -12,7 +12,7 @@ Assembler::Assembler( int argc, char *argv[] )
 {
     // Nothing else to do here at this point.
 }
-// Destructor currently does nothing.  You might need to add something as you develope this project.
+// Destructor currently does nothing.  You might need to add something as you develop this project.
 Assembler::~Assembler( )
 {
 }
@@ -26,15 +26,19 @@ void Assembler::PassI( )
 
         // Read the next line from the source file.
         string line; 
-        if( ! m_facc.GetNextLine(line) ) {
-
+        if( ! m_facc.GetNextLine(line) ) 
+        {
             // If there are no more lines, we are missing an end statement.
             // We will let this error be reported by Pass II.
+
+            //CHECKCHECK CHECK FOR ERROR !!!!!
+
             return;
         }
+
         // Parse the line and get the instruction type.
         Instruction::InstructionType st =  m_inst.ParseInstruction( line );
-
+               
         // If this is an end statement, there is nothing left to do in pass I.
         // Pass II will determine if the end is the last statement.
         if( st == Instruction::ST_End ) return;
@@ -44,11 +48,11 @@ void Assembler::PassI( )
         if( st != Instruction::ST_MachineLanguage && st != Instruction::ST_AssemblerInstr ) 
         {
         	continue;
-	  }
-        // If the instruction has a label, record it and its location in the
-        // symbol table.
-        if( m_inst.isLabel( ) ) {
+        }
 
+        // If the instruction has a label, record it and its location in the symbol table.
+        if( m_inst.isLabel( ) ) 
+        {
             m_symtab.AddSymbol( m_inst.GetLabel( ), loc );
         }
         // Compute the location of the next instruction.
@@ -56,3 +60,37 @@ void Assembler::PassI( )
     }
 }
 
+void Assembler::PassII()
+{
+    int loc = 0;        // Tracks the location of the instructions to be generated.
+
+    m_facc.rewind();
+
+    // Successively process each line of source code.
+    for (; ; ) {
+
+        // Read the next line from the source file.
+        string line;
+        if (!m_facc.GetNextLine(line))
+        {
+            // If there are no more lines, we are missing an end statement.
+            // We will let this error be reported by Pass II.
+
+            //CHECKCHECK CHECK FOR ERROR !!!!!
+
+            return;
+        }
+
+        // Parse the line and get the instruction type.
+        Instruction::InstructionType st = m_inst.ParseInstruction(line);
+
+        // Labels can only be on machine language and assembler language
+        // instructions.  So, skip other instruction types.  Currently this is only comments.
+        if (st != Instruction::ST_MachineLanguage && st != Instruction::ST_AssemblerInstr)
+        {
+            continue;
+        }
+
+        
+    }
+}
