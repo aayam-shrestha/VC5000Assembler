@@ -19,7 +19,6 @@ Assembler::~Assembler( )
 {
 }
 
-
 // Pass I establishes the location of the labels.  You will write better function comments according to the coding standards.
 void Assembler::PassI( ) 
 {
@@ -62,7 +61,7 @@ void Assembler::PassI( )
     }
 }
 
-// Pass II generatea a translation of the assembly language into machine code
+// Pass II generates a a translation of the assembly language into machine code
 void Assembler::PassII()
 {
     // Tracks the location of the instructions to be generated.
@@ -77,48 +76,37 @@ void Assembler::PassII()
     //Initialize error reports
     Errors::InitErrorReporting();
 
-    //Clear the vector holding pair of location and content
+    //Clear the vector that's holding the pair of location and content
     m_machineCode.clear();
 
     //Output message for translation of program
     std::cout << "\nTranslation of Program: " << std::endl;
     std::cout << "Location" << "   " << "Contents" << "   " << "Original Statement" << std::endl;
 
-    // Successively process each line of source code.
+    // Processing each line of source code
     for (; ; ) {
 
         // Read the next line from the source file.
         std::string line;
         if (!m_facc.GetNextLine(line))
         {
-            //Do nothing if end statement is in place
             if (is_end == true)
             {
-                true;
+                break;
             }
-
-            /*
-            //CHECKCHECK CHECK FOR ERROR !!!!!
 
             // If there are no more lines, we are missing an end statement.
             //Report error 
-            Errors::RecordError("Location: " + to_string(loc) + " -> Missing an END statement");
+            Errors::RecordError("Location: " + std::to_string(loc) + " -> Missing an END statement");
             break;
-            */
-            std::cout << "--------------------------------------------------\n\n";
-            std::cout << "Press Enter to Continue...";
-            std::cin.get();
-            return;
         }
 
         //Pair to store machine language instruction
         std::pair<int, std::string> translation = m_inst.TranslateInstruction(line, loc);
 
-        //Set end flag when end statement appears
+        //Set end flag to true when end statement appears
         if (translation == std::pair <int, std::string>(0, "end"))
-        {
             is_end = true;
-        }
 
         //If there is no valid machine code
         else if (translation != std::pair<int, std::string>(0, "n/a"))
@@ -126,17 +114,26 @@ void Assembler::PassII()
            m_machineCode.push_back(translation);
         }
 
-        //Get the location of next instruction
-        loc = m_inst.LocationNextInstruction(loc);
-
-        /* CHECK CHECK FOR ERROR
-        
-        //Display error if it is not empty
-        if (!Errors::isEmptyErrors())
+        if (m_inst.computeType(line) == m_inst.ST_Comment || m_inst.computeType(line) == m_inst.ST_End)
         {
-            Errors::DisplayErrors();
+            continue;
         }
-
-        */
+        else
+        {
+            //Get the location of next instruction
+            loc = m_inst.LocationNextInstruction(loc);
+        }
     }
+
+    //Display error if it is not empty
+    if (!Errors::IsEmpty())
+    {
+        Errors::DisplayErrors();
+    }
+    
+    //Prompt for user to press enter
+    std::cout << "--------------------------------------------------\n\n";
+    std::cout << "Press Enter to Continue...";
+    std::cin.get();
+    return;
 }

@@ -20,6 +20,9 @@ public:
     // Displays the collected error message.
     static void DisplayErrors();
 
+    //Check if vector for error messages is empty and returns a bool
+    static bool IsEmpty();
+
 private:
 
     static std::vector<std::string> m_ErrorMsgs;  // This must be declared in the .cpp file.  Why?

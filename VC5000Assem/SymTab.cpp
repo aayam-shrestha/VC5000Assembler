@@ -45,6 +45,8 @@ void SymbolTable::DisplaySymbolTable() {
         std::cout << s_num << "\t   " << iter.first << "\t    " << iter.second << std::endl;
         s_num++;
     }
+
+    //Prompt for user to press enter
     std::cout << "--------------------------------------------------\n\n";
     std::cout << "Press Enter to Continue...";
     std::cin.get();

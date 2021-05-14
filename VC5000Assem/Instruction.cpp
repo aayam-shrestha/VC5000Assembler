@@ -100,6 +100,7 @@ int Instruction::LocationNextInstruction(int a_loc)
     {
         return stoi(m_Operand1);
     }
+
     //Check if instruction is define storage and return new location after incrementing
     else if (m_type == ST_MachineLanguage && lowerCase(m_OpCode) == "ds")
     {
@@ -127,19 +128,19 @@ std::pair<int, std::string> Instruction::TranslateInstruction(std::string& a_lin
         //Store the location
         int loc = 0;
 
-        //If one word instruction
+        //If instruction is a single word
         if (m_Label == "" && m_Operand1 == "" && m_Operand2 == "") {
             m_OpCode = lowerCase(m_OpCode);
             //Check to see if opcode is in assembly langauge istruction
             if (OpCodeNumber(m_OpCode) != -1)
             {
-                std::string a = zeroPadding("0", 6);
+                std::string a = zeroPadding("", 6);
                 //Halt is the only opcode without operand
                 if (m_OpCode == "halt")
                 {
                     assembly_code = "139" + a;
                 }
-                //If not halt, one word instruction is an error
+                //If not halt,  instruction is an error
                 else
                 {
                     Errors::RecordError("Location : " + std::to_string(a_loc) + " : Missing Operand");

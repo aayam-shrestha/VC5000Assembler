@@ -22,3 +22,12 @@ void Errors::DisplayErrors()
     }
     m_ErrorMsgs.clear();
 }
+
+bool Errors::IsEmpty()
+{
+    if (m_ErrorMsgs.empty())
+    {
+        return true;
+    }
+    return false;
+}
