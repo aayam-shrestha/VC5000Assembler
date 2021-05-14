@@ -19,8 +19,6 @@ public:
         ST_Comment,          		// Comment or blank line
         ST_End                   		// end instruction.
     };
-    // Parse the Instruction.
-    InstructionType ParseInstruction(std::string m_instruction);
 
     //----- Using code from the website for the functions removeComments and ParseLineIntoFilelds -----
 
@@ -36,6 +34,9 @@ public:
     //Compute and return the type of instruction
     InstructionType computeType(std::string& a_OpCode);
 
+    //Remove comments, parse string into components, and return the type of instruction
+    InstructionType ParseInstruction(std::string m_instruction);
+
     // Compute the location of the next instruction.
     int LocationNextInstruction(int a_loc);
 
@@ -50,6 +51,12 @@ public:
 
     // Translate assembly instruction into machine language
     std::pair<int, std::string> TranslateInstruction(std::string& a_line, int a_loc);
+
+    //Stores Op Codes in a map and returns their respective number
+    int OpCodeNumber(std::string& a_loc);
+
+    //Pads a string with specified leading characters until it has the specified number of characters and then returns it
+    std::string zeroPadding(std::string a_temp, int a_length);
 
 private:
     // The elemements of a instruction
