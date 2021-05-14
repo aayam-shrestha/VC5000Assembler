@@ -18,7 +18,6 @@ private:
     Instruction m_inst;	    // Instruction object
     emulator m_emul;        // Emulator object
 
-    //Vector of pairs to hold machine language translation
     std::vector <std::pair <int, std::string>> m_machineCode;
 
 public:

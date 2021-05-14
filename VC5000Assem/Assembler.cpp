@@ -5,6 +5,7 @@
 #include "Assembler.h"
 #include "Errors.h"
 
+
 // Constructor for the assembler.  Note: we are passing argc and argv to the file access constructor.
 // See main program.  
 Assembler::Assembler( int argc, char *argv[] )
@@ -12,10 +13,12 @@ Assembler::Assembler( int argc, char *argv[] )
 {
     // Nothing else to do here at this point.
 }
+
 // Destructor currently does nothing.  You might need to add something as you develop this project.
 Assembler::~Assembler( )
 {
 }
+
 
 // Pass I establishes the location of the labels.  You will write better function comments according to the coding standards.
 void Assembler::PassI( ) 
@@ -59,28 +62,27 @@ void Assembler::PassI( )
     }
 }
 
+// Pass II generatea a translation of the assembly language into machine code
 void Assembler::PassII()
 {
     // Tracks the location of the instructions to be generated.
-    int loc = 0;        
+    int loc = 0;
+
+    // Flag that indicates if the code has reached the end statement
+    bool is_end = false;
 
     // Moving file pointer to the beginning of the file and clearing the eof flag
     m_facc.rewind();
 
-    // End statement flag
-    bool is_end = false;
-
     //Initialize error reports
     Errors::InitErrorReporting();
 
-    /*
-    //Clear container holding pair of location and content to pass into emulator
+    //Clear the vector holding pair of location and content
     m_machineCode.clear();
-    */
 
-    //Header of the translation of program
-    std::cout << "Translation of Program: " << std::endl;
-    std::cout << "Location" << "\t   " << "Contents" << "\t   " << "Original Statement" << std::endl;
+    //Output message for translation of program
+    std::cout << "\nTranslation of Program: " << std::endl;
+    std::cout << "Location" << "   " << "Contents" << "   " << "Original Statement" << std::endl;
 
     // Successively process each line of source code.
     for (; ; ) {
@@ -103,7 +105,9 @@ void Assembler::PassII()
             Errors::RecordError("Location: " + to_string(loc) + " -> Missing an END statement");
             break;
             */
-
+            std::cout << "--------------------------------------------------\n\n";
+            std::cout << "Press Enter to Continue...";
+            std::cin.get();
             return;
         }
 
@@ -119,7 +123,7 @@ void Assembler::PassII()
         //If there is no valid machine code
         else if (translation != std::pair<int, std::string>(0, "n/a"))
         {
-            m_machineCode.push_back(translation);
+           m_machineCode.push_back(translation);
         }
 
         //Get the location of next instruction
