@@ -2,8 +2,7 @@
 // Class to manage error reporting. Note: all members are static so we can access them anywhere.
 // What other choices do we have to accomplish the same thing?
 //
-#ifndef _ERRORS_H
-#define _ERRORS_H
+#pragma once
 
 #include <string>
 #include <vector>
@@ -25,4 +24,3 @@ private:
 
     static std::vector<std::string> m_ErrorMsgs;  // This must be declared in the .cpp file.  Why?
 };
-#endif
