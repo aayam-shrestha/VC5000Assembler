@@ -34,5 +34,5 @@ public:
     void PassII();
     
     // Run emulator on the translation.
-    void RunProgramInEmulator() {} //CHECKCHECK
+    void RunProgramInEmulator();
 };

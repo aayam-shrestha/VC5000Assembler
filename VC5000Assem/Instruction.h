@@ -52,7 +52,7 @@ public:
     // Translate assembly instruction into machine language
     std::pair<int, std::string> TranslateInstruction(std::string& a_line, int a_loc);
 
-    //Stores Op Codes in a map and returns their respective number
+    //Stores symbolic op codes in a map and returns their respective numeric op codes
     int OpCodeNumber(std::string& a_loc);
 
     //Pads a string with specified leading characters until it has the specified number of characters and then returns it

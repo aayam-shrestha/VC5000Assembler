@@ -9,7 +9,6 @@ class SymbolTable {
 private:
 
 public:
-    // Get rid of constructor and destructor later if you don't need them.
     SymbolTable( ) {};
     ~SymbolTable( ) {};
     
@@ -23,4 +22,7 @@ public:
 
     // Lookup a symbol in the symbol table.
     static bool LookupSymbol(const std::string& a_symbol, int& a_loc);
+
+    // Check if symbol already exists in symbol table
+    static bool isSymbolMatch(std::string a_symbol, int a_loc);
 };

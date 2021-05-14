@@ -14,7 +14,7 @@ public:
          m_memory.resize(MEMSZ, 0);
     }
     // Records instructions and data into VC5000 memory.
-    bool insertMemory( int a_location, long long a_contents );
+    bool insertMemory( int a_location, int a_contents );
     
     // Runs the VC5000 program recorded in memory.
     bool runProgram( );
