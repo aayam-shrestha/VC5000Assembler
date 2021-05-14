@@ -19,6 +19,9 @@ DESCRIPTION
     in the symbol table.
 */
 
+// Symbol Table Map, Symbol is the key and location is value to the map here
+std::map<std::string, int> m_symbolTable;
+
 void SymbolTable::AddSymbol( const std::string &a_symbol, int a_loc )
 {
     // If the symbol is already in the symbol table, record it as multiply defined.
@@ -49,5 +52,15 @@ void SymbolTable::DisplaySymbolTable() {
 
 bool SymbolTable::LookupSymbol(const std::string& a_symbol, int& a_loc) 
 {
-    return true;
+    std::map<std::string, int>::iterator it = m_symbolTable.find(a_symbol);
+
+    //If iterator reaches the end, the symbol is not in the table
+    if (it != m_symbolTable.end())
+    {
+        //set location to the value corresponding to the symbol in the table
+        a_loc = it->second;
+        return true;
+    }
+
+    return false;
 }

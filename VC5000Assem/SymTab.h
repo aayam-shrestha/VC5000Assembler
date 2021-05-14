@@ -7,8 +7,6 @@
 class SymbolTable {
 
 private:
-    // This is the actual symbol table.  The symbol is the key to the map.  The value is the location.
-    std::map<std::string, int> m_symbolTable;
 
 public:
     // Get rid of constructor and destructor later if you don't need them.
@@ -24,5 +22,5 @@ public:
     void DisplaySymbolTable();
 
     // Lookup a symbol in the symbol table.
-    bool LookupSymbol(const std::string& a_symbol, int& a_loc);
+    static bool LookupSymbol(const std::string& a_symbol, int& a_loc);
 };
