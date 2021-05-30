@@ -153,21 +153,19 @@ void Assembler::PassII()
             }
 
             // If there are no more lines, we are missing an end statement.
-            //Report error 
-            Errors::RecordError("Location: " + std::to_string(loc) + " -> Missing an END statement");
+            //Report error
+            Errors::RecordError("Location: " + std::to_string(loc) + "  Error: Missing an END statement");
             break;
         }
 
-        //Pair to store machine language instruction
+        //Pair that stores machine language translation
         std::pair<int, std::string> translation = m_inst.TranslateInstruction(line, loc);
 
-        
-
-        //Set end flag to true when end statement appears
+        //Set end flag to true if the end statement appears
         if (translation == std::pair <int, std::string>(0, "end"))
             is_end = true;
 
-        //If there is no valid machine code
+        //If machine code is valid, insert into m_machineCode vector
         else if (translation != std::pair<int, std::string>(0, "n/a"))
         {
            m_machineCode.push_back(translation);
@@ -228,7 +226,7 @@ DATE
 /**/
 void Assembler::RunProgramInEmulator()
 {
-    std::cout << "Results from emulating program" << std::endl;
+    std::cout << "\nResults from emulating program" << std::endl;
     //Terminate the emulation if there are errors
     if (!Errors::isEmpty())
     {
@@ -236,25 +234,26 @@ void Assembler::RunProgramInEmulator()
         return;
     }
 
-    //Insert the machine code into the emulator class and report error
+    //Insert the machine code into the emulator class and report errors
     for (std::vector<std::pair<int, std::string>>::iterator it = m_machineCode.begin(); it != m_machineCode.end(); ++it)
     {
-        bool insert_check = m_emul.insertMemory(it->first, stoi(it->second));
+        bool isInsert = m_emul.insertMemory(it->first, stoi(it->second));
 
-        if (!insert_check)
+        if (!isInsert)
         {
             Errors::RecordError("Error inserting the command: " + std::to_string(it->first) + " " + it->second + "in emulator.");
         }
     }
-    //Run emulator program and check for error
-    bool check_error = m_emul.runProgram();
 
-    if (!check_error)
+    //Run program in emulator and check for errors
+    bool isError = m_emul.runProgram();
+
+    if (!isError)
     {
         Errors::RecordError("Errors running the Emulator ");
     }
 
-    //Display errors encountered during emulation
+    //Print errors that occured during emulation if any
     if (!Errors::isEmpty())
     {
         Errors::DisplayErrors();

@@ -114,3 +114,36 @@ void FileAccess::rewind( )
     m_sfile.clear();
     m_sfile.seekg( 0, std::ios::beg );
 }/* void FileAccess::rewind( ); */
+
+
+/**/
+/*
+void FileAccess::PrintFile()
+
+NAME
+
+    FileAccess::PrintFile - prints each line of file
+
+SYNOPSIS
+
+    void FileAccess::PrintFile( );
+
+DESCRIPTION
+
+    This function loops through the file and prints each line to the console.
+
+RETURNS
+
+    VOID
+
+*/
+/**/
+void FileAccess::PrintFile()
+{
+    std::string line;
+    while (!m_sfile.eof())
+    {
+        getline(m_sfile, line);
+        std::cout << line << std::endl;
+    }
+}/* void FileAccess::PrintFile(); */

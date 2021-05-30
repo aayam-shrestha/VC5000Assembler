@@ -10,7 +10,9 @@
 class FileAccess {
 
 private:
-    std::ifstream m_sfile;   // Source file object.
+
+    // Source file object
+    std::ifstream m_sfile;   
 
 public:
     // Opens the file.
@@ -25,13 +27,6 @@ public:
     // Put the file pointer back to the beginning of the file.
     void rewind( );
 
-    void PrintFile()
-    {
-        std::string line;
-        while (!m_sfile.eof())
-        {
-            getline(m_sfile, line);
-            std::cout << line << std::endl;
-        }
-    }
+    //Prints each line of the file
+    void PrintFile();
 };

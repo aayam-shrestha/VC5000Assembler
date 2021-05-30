@@ -77,6 +77,8 @@ bool Instruction::ParseLineIntoFields(std::string a_line, std::string& a_label, 
     std::string endStr = "";
     a_label = a_OpCode = a_Operand1 = a_Operand2 = "";
     std::stringstream ins(a_line);
+
+    //if first character is an empty space or tab, the instruction doesn't contain a label
     if (a_line[0] == ' ' || a_line[0] == '\t')
     {
         a_label = "";
@@ -290,27 +292,22 @@ std::pair<int, std::string> Instruction::TranslateInstruction(std::string& a_lin
     // Parse the line and get the instruction type.
     InstructionType st = ParseInstruction(a_line);
 
-    //It is an error if the instruction has more than four words
-    /*if (!ParseLineIntoFields(a_line, m_Label, m_OpCode, m_Operand1, m_Operand2))
-    {
-        Errors::RecordError("Location " + std::to_string(a_loc) + " : More than four fields");
-    }*/
-
-    //Report error if label or operand is longer than twenty characters
-    if (m_Label.length() > 20 || m_Operand1.length() > 20 || m_Operand2.length() > 20)
-    {
-        Errors::RecordError("Location " + std::to_string(a_loc) + " : More than twenty characters");
-    }
-
     //Report error if constant is larger than the size of a word
     if (lowerCase(m_OpCode) == "ds")
     {
         if (stoi(m_Operand1) > 999999)
         {
-            Errors::RecordError("Location " + std::to_string(a_loc) + " : Constant too large");
+            Errors::RecordError("Location: " + std::to_string(a_loc) + "  Error: Constant too large");
         }
     }
 
+    //Report error if label or operand is longer than twenty characters
+    if (m_Label.length() > 20 || m_Operand1.length() > 20 || m_Operand2.length() > 20)
+    {
+        Errors::RecordError("Location: " + std::to_string(a_loc) + "  Error: More than twenty characters");
+    }
+
+    //Checks if instruction is machine code and performs corresponding actions
     if (st == ST_MachineLanguage)
     {
         //Store assembly language code for instruction
@@ -333,7 +330,7 @@ std::pair<int, std::string> Instruction::TranslateInstruction(std::string& a_lin
                 //If the instruction is not halt and it is only one word, it is an error
                 else
                 {
-                    Errors::RecordError("Location : " + std::to_string(a_loc) + " : Missing Operand");
+                    Errors::RecordError("Location: " + std::to_string(a_loc) + "  Error : Missing Operand");
                     assembly_code = std::to_string(OpCodeNumber(m_OpCode)) + "????????";
                     assembly_code = zeroPadding(assembly_code, 8);
                 }
@@ -341,7 +338,7 @@ std::pair<int, std::string> Instruction::TranslateInstruction(std::string& a_lin
             //If op code not found
             else
             {
-                Errors::RecordError("Location : " + std::to_string(a_loc) + " Invalid Operation Command");
+                Errors::RecordError("Location : " + std::to_string(a_loc) + "  Error: Invalid Operation Command");
                 assembly_code = "?????";
             }
         }
@@ -355,7 +352,7 @@ std::pair<int, std::string> Instruction::TranslateInstruction(std::string& a_lin
                 //Check if label is multiply defined 
                 if (SymbolTable::isSymbolMatch(m_Label, -999))
                 {
-                    Errors::RecordError("Location : " + std::to_string(a_loc) + " Multiply Defined Symbol");
+                    Errors::RecordError("Location : " + std::to_string(a_loc) + "  Error: Multiply Defined Symbol");
                 }
             }
             if (OpCodeNumber(m_OpCode) != -1)
@@ -370,13 +367,13 @@ std::pair<int, std::string> Instruction::TranslateInstruction(std::string& a_lin
                 }
                 else
                 {
-                    Errors::RecordError("Location: " + std::to_string(a_loc) + " Undefined Operand");
+                    Errors::RecordError("Location: " + std::to_string(a_loc) + "  Error: Undefined Operand");
                     assembly_code = assembly_code + m_Operand1;
                 }
             }
             else
             {
-                Errors::RecordError("Location: " + std::to_string(a_loc) + " Invalid Operation Command");
+                Errors::RecordError("Location: " + std::to_string(a_loc) + "  Error: Invalid Operation Command");
                 assembly_code = "???";
             }
         }
@@ -403,7 +400,7 @@ std::pair<int, std::string> Instruction::TranslateInstruction(std::string& a_lin
             }
             else
             {
-                Errors::RecordError("Location: " + std::to_string(a_loc) + " Invalid Operation Command");
+                Errors::RecordError("Location: " + std::to_string(a_loc) + "  Error: Invalid Operation Command");
                 assembly_code = "?????";
             }
         }

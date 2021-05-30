@@ -4,25 +4,25 @@
 
 /**/
 /*
-bool emulator::insertMemory(int a_location, long long a_contents)
+bool emulator::insertMemory(int a_location, int a_contents)
 
 NAME
 
-	emulator::insertMemory(int a_location, long long a_contents)) - Inserts the machine language contents into the memory location
+	emulator::insertMemory - inserts line of machine language code into memory location
 
 SYNOPSIS
 
-	bool emulator::insertMemory(int a_location, long long a_contents)
+	bool emulator::insertMemory(int a_location, int a_contents);
 	a_location		-->			location of the machine language
 	a_contents		-->			content of the machine language
 
 DESCRIPTION
 
-	This function inserts the contents into VC 5000 Computer.
+	This function inserts the line of machine code into VC 5000 Computer.
 
 RETURNS
 
-	Returns true if successfully inserted in memory and false if not.
+	Returns true if instruction is successfully inserted into memory and false otherwise.
 
 AUTHOR
 
@@ -30,11 +30,9 @@ AUTHOR
 
 DATE
 
-	2:42 PM 05/11/2021
+	2:24 PM 05/12/2021
 */
 /**/
-
-
 bool emulator::insertMemory(int a_location, int a_contents)
 {
 	if (a_location >= 0 && a_location < MEMSZ)
@@ -50,15 +48,13 @@ bool emulator::insertMemory(int a_location, int a_contents)
 }  /* bool emulator::insertMemory(int a_location, long long a_contents) */
 
 
-
-
 /**/
 /*
 bool emulator::runProgram()
 
 NAME
 
-	emulator:: runProgram - Runs the VC5000 program recorded in memory.
+	emulator::runProgram - Runs the VC5000 program that is stored in memory.
 
 SYNOPSIS
 
@@ -78,77 +74,89 @@ AUTHOR
 
 DATE
 
-	4:20 PM 05/12/2021
+	4:20 PM 05/13/2021
 */
 /**/
 bool emulator::runProgram()
 {
+	//String to store user input
+	std::string user_input;
 
-	int loc = 100;			//Variable to store location
-	std::string user_input;		// Variable to store user input
-	char sign = 'n';	 //Variable to store sign
+	// Integer that stores memory location
+	int loc = 100;				
+
+	// Char that stores sign
+	char sign = 's';			
 
 	while (true)
 	{
-		int instr = m_memory[loc]; //Instruction at the given location
-		int opCode = instr / 10000000;		//Extracting opcode from machine code
-		int regNum = instr / 1000000 % 10;	//Extracting register number from machine code
-		int address = instr % 1000000;		//Extracting address from machine code 
+		// Instruction at the given location
+		int instr = m_memory[loc];		
 
+		// Extracting opcode from machine code
+		int opCode = instr / 10000000;	
+
+		// Extracting register number from machine code
+		int regNum = instr / 1000000 % 10;	
+
+		// Extracting address from machine code
+		int address = instr % 1000000;		 
+
+		// Check op code and perform corresponding actions
 		switch (opCode)
 		{
-		case 1:
-			//ADD
+		case 1: //ADD
 			m_reg[regNum] += m_memory[address];
-			++loc;
+			loc++;
 			break;
-		case 2:
-			//SUB
+
+		case 2: //SUB
 			m_reg[regNum] -= m_memory[address];
-			++loc;
+			loc++;
 			break;
-		case 3:
-			//MULT
+
+		case 3: //MULT
 			m_reg[regNum] *= m_memory[address];
-			++loc;
+			loc++;
 			break;
-		case 4:
-			//DIV
+
+		case 4: //DIV
 			m_reg[regNum] /= m_memory[address];
-			++loc;
+			loc++;
 			break;
-		case 5:
-			//LOAD
+
+		case 5: //LOAD
 			m_reg[regNum] = m_memory[address];
-			++loc;
+			loc++;
 			break;
-		case 6:
-			//STORE
+
+		case 6: //STORE
 			address = m_reg[regNum];
-			++loc;
+			loc++;
 			break;
-		case 7:
-			//READ
+
+		case 7: //READ
 			std::cout << "?";
 			std::cin >> user_input;
-			//Check if the user input is negative or positive
-			//Remove the sign if negative 
+
+			//If user input is negative remove the sign
 			if (user_input[0] == '-')
 			{
-				sign = user_input[0];
+				sign = '-';
 				//Erase first character from user input
 				user_input = user_input.erase(0, 1);
 			}
 
-			//Check if the user input is number
+			//Check if user input is a number
 			for (auto& it : user_input)
 			{
 				if (!isdigit(it))
 				{
-					std::cout << "Each character of input must be a number" << std::endl;
+					std::cout << "Error: Each input character must be a number" << std::endl;
 				}
 			}
-			//Store user input to memory address
+
+			//Store user input in memory
 			m_memory[address] = stoi(user_input);
 			if (sign == '-')
 			{
@@ -156,17 +164,17 @@ bool emulator::runProgram()
 			}
 			loc++;
 			break;
-		case 8:
-			//WRITE
+
+		case 8: //WRITE
 			std::cout << m_memory[address] << std::endl;
 			loc++;
 			break;
-		case 9:
-			//BRANCH  
+
+		case 9: //BRANCH  
 			loc = address;
 			break;
-		case 10:
-			//BRANCH MINUS
+
+		case 10: //BRANCH MINUS
 			if (m_reg[regNum] < 0)
 			{
 				loc = address;
@@ -176,8 +184,8 @@ bool emulator::runProgram()
 				loc++;
 			}
 			break;
-		case 11:
-			//BRANCH ZERO
+
+		case 11: //BRANCH ZERO
 			if (m_reg[regNum] == 0)
 			{
 				loc = address;
@@ -187,8 +195,8 @@ bool emulator::runProgram()
 				loc++;
 			}
 			break;
-		case 12:
-			//BRANCH POSITIVE
+
+		case 12: //BRANCH POSITIVE
 			if (m_reg[regNum] > 0)
 			{
 				loc = address;
@@ -198,19 +206,15 @@ bool emulator::runProgram()
 				loc++;
 			}
 			break;
-		case 13:
-			//HALT
+
+		case 13: //HALT
+			std::cout << "\nEnd of Emulation" << std::endl;
 			exit(1);
 
 		default:
 			std::cerr << "Illegal Opcode" << std::endl;
 			return false;
 		}
-		//Check if the program ends
-		/*if (is_end)
-		{
-			return true;
-		}*/
 	}
 	return false;
 } /* bool emulator::runProgram() */

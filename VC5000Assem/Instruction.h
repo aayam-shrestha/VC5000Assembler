@@ -9,6 +9,7 @@
 class Instruction{
 
 public:
+
     Instruction( ) { };
     ~Instruction( ) { };
 
@@ -59,17 +60,15 @@ public:
     std::string zeroPadding(std::string a_temp, int a_length);
 
 private:
-    // The elemements of a instruction
+
+    // The elemements of an instruction
     std::string m_Label;            // The label.
     std::string m_OpCode;       // The symbolic op code.
     std::string m_Operand1;     // The first operand. 
     std::string m_Operand2;     // The second operand.
     std::string m_instruction;    // The original instruction.
 
-    // Derived values.
-    int m_NumOpCode;     // The numerical value of the op code for machine language equivalents.
+    // Type of instruction (Machine language, Assembly language, Comment, or End)
     InstructionType m_type; // The type of instruction.
 
-    bool m_IsNumericOperand1;// == true if the operand is numeric.
-    int m_Operand1Value;   // The value of the operand if it is numeric.
 };

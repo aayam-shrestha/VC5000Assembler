@@ -25,5 +25,6 @@ public:
 
 private:
 
+    // Container to hold error messages
     static std::vector<std::string> m_ErrorMsgs;
 };

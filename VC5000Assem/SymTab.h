@@ -9,9 +9,12 @@ class SymbolTable {
 private:
 
 public:
+
+    //Constructors for SymbolTable class
     SymbolTable( ) {};
     ~SymbolTable( ) {};
     
+    // Location for all multiply defined symbols
     const int multiplyDefinedSymbol = -999;
 
     // Add a new symbol to the symbol table.
