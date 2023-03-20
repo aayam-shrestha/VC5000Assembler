@@ -1,6 +1,6 @@
 ## Assembler and Emulator for a Decimal Computer
 
-This is a decimal commputer, called VC5000. It has its own instruction set and assembly language instructions. There is also an emulator that executes the machine language instructions. Additional documentation can be found below:
+This is a decimal computer, called VC5000. It has its own instruction set and assembly language instructions. There is also an emulator that executes the machine language instructions. Additional documentation can be found below:
 
 [Design of the Computer](https://github.com/aayam-shrestha/VC5000Assembler/blob/main/Resources/vc5000_computer.pdf)
 
